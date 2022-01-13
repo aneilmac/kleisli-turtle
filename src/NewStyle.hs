@@ -10,6 +10,7 @@ drawSquare :: Float -> TurtleCommand Float
 drawSquare length = do 
   fd (length / 2)
   replicateM_ 4 $ lt 90 >> forward length
+  lt 45 
   return length
 
 drawCircle :: Float -> TurtleCommand Float
@@ -17,10 +18,5 @@ drawCircle diameter = do
   circle $ diameter / 2
   return diameter
 
-nextStep :: Float -> TurtleCommand Float
-nextStep length = do  
-  lt 45
-  return $ sqrt_2 * length
-
 squareCircle :: Float -> TurtleCommand ()
-squareCircle = drawCircle >=> drawSquare >=> nextStep >=> squareCircle
+squareCircle = drawCircle >=> drawSquare >=> squareCircle . (sqrt_2 *)
